@@ -1,4 +1,4 @@
-// backend/routes/account.js
+// account.js
 const express = require('express');
 const { authMiddleware } = require('../middleware');
 const { Account } = require('../db');
@@ -7,13 +7,36 @@ const { default: mongoose } = require('mongoose');
 const router = express.Router();
 
 router.get("/balance", authMiddleware, async (req, res) => {
-    const account = await Account.findOne({
-        userId: req.userId
-    });
+    const session = await mongoose.startSession();
 
-    res.json({
-        balance: account.balance
-    })
+    try {
+        session.startTransaction();
+
+        const account = await Account.findOne({
+            userId: req.userId
+        }).session(session);
+
+        if (!account) {
+            await session.abortTransaction();
+            return res.status(404).json({
+                message: "Account not found"
+            });
+        }
+
+        await session.commitTransaction();
+
+        res.json({
+            balance: account.balance
+        });
+    } catch (error) {
+        await session.abortTransaction();
+        console.error('Error fetching balance:', error);
+        res.status(500).json({
+            message: 'Server error'
+        });
+    } finally {
+        session.endSession();
+    }
 });
 
 router.post("/transfer", authMiddleware, async (req, res) => {

@@ -3,14 +3,18 @@ const mongoose = require('mongoose');
 
 const connectDb = async () => {
   try {
-    await mongoose.connect("your/mongodb/url/paytm");
+    await mongoose.connect("mongodb+srv://mant0597:mant0597%40MMJ@nodeexpressprojects.czjrxgf.mongodb.net/paytm", {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
     console.log('Connected to MongoDB');
   } catch (error) {
     console.error('Failed to connect to MongoDB', error);
-    process.exit(1); 
+    process.exit(1); // Exit process with failure
   }
 };
 
+// Create a Schema for Users
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -42,7 +46,7 @@ const userSchema = new mongoose.Schema({
 
 const accountSchema = new mongoose.Schema({
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId, // Reference to User model
     ref: 'User',
     required: true
   },

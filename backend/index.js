@@ -1,4 +1,3 @@
-// backend/index.js
 const express = require('express');
 const cors = require('cors');
 const rootRouter = require('./routes/index');
@@ -6,7 +5,10 @@ const { connectDb } = require('./db');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', // Replace with your frontend URL
+    optionsSuccessStatus: 200
+  }));
 app.use(express.json());
 
 app.use('/api/v1', rootRouter);
