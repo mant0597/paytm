@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+// Users.jsx
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./Button";
@@ -66,3 +67,5 @@ function User({ user, index, navigate }) {
         </div>
     );
 }
+
+export default Users; // Export Users as default

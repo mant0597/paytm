@@ -16,7 +16,7 @@ export const SendMoney = () => {
                 amount
             }, {
                 headers: {
-                    Authorization: "Bearer " + localStorage.getItem("token")
+                    "x-auth-token": localStorage.getItem("token")
                 }
             });
             setMessage("Transfer successful");

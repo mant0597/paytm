@@ -1,3 +1,4 @@
+// Appbar.jsx
 export const Appbar = () => {
     return (
         <div className="shadow h-14 flex justify-between items-center px-4 bg-white">

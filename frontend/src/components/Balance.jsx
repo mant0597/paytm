@@ -1,12 +1,15 @@
+// Balance.jsx
 import React from 'react';
 
 const Balance = ({ value }) => {
+    // Handle loading state or fallback
     if (value === null || value === undefined) {
-        return <div>Loading...</div>;
+        return <div>Loading...</div>; // Or any other loading indicator
     }
 
+    // Ensure value is a number before calling toLocaleString
     if (typeof value !== 'number') {
-        return <div>Error: Invalid balance value</div>;
+        return <div>Error: Invalid balance value</div>; // Handle unexpected data types
     }
 
     return (
@@ -17,4 +20,4 @@ const Balance = ({ value }) => {
     );
 };
 
-export { Balance };
+export { Balance }; // Export Balance as a named export
